@@ -16,7 +16,6 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
             margin: 0;
-            user-select: none;
         }
 
         .instructions {
@@ -33,43 +32,16 @@
             backdrop-filter: blur(5px);
         }
 
-        .github-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-        }
-
-        .github-badge a {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 16px;
-            background: rgba(255,255,255,0.1);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
-
-        .github-badge a:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-2px);
-        }
-
+        /* Contenedor del Libro */
         .book {
             position: relative;
             width: 380px;
             height: 550px;
             transition: transform 0.5s;
             perspective: 1500px;
-            display: flex;
-            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
         }
 
+        /* Estilo de cada hoja */
         .paper {
             position: absolute;
             width: 100%;
@@ -79,11 +51,9 @@
             perspective: 1500px;
             transform-origin: left;
             transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
-            cursor: grab;
             transform-style: preserve-3d;
+            cursor: pointer;
         }
-
-        .paper.holding { cursor: grabbing; transition: none; }
 
         .front, .back {
             position: absolute;
@@ -94,284 +64,167 @@
             border-radius: 5px 20px 20px 5px;
             box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
             background-color: #ffffff;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
         }
 
         .back { 
             transform: rotateY(180deg); 
-            border-left: 8px solid #e74c3c; 
             background-color: #f9f9f9; 
         }
 
-        /* Estilos de Contenido */
+        /* Cuando la página está volteada */
+        .paper.flipped {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+
+        /* Contenido */
         .content { 
             padding: 25px; 
             flex-grow: 1; 
-            font-size: 0.95rem; 
             overflow-y: auto;
-        }
-
-        .page-num { 
-            text-align: center; 
-            padding: 10px; 
-            font-size: 0.8rem; 
-            color: #999; 
-            border-top: 1px solid #eee; 
-        }
-        
-        h2 { 
-            margin-top: 0; 
-            color: #2c3e50; 
-            border-bottom: 3px solid #3498db; 
-            display: inline-block; 
-            padding-bottom: 5px;
-        }
-
-        h3 { 
-            color: #e67e22; 
-            margin: 12px 0 5px 0; 
-        }
-
-        p { 
-            line-height: 1.5; 
-            color: #34495e; 
-            margin: 8px 0;
-        }
-
-        ul, ol {
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-
-        li {
-            margin: 5px 0;
-            color: #34495e;
-        }
-        
-        /* Bloques de Código */
-        code {
-            background: #f0f0f0;
-            padding: 2px 5px;
-            border-radius: 4px;
-            font-family: 'Consolas', 'Monaco', monospace;
-            color: #c0392b;
-            font-size: 0.9em;
         }
 
         pre {
             background: #282c34;
             color: #abb2bf;
-            padding: 12px;
+            padding: 10px;
             border-radius: 5px;
             font-size: 0.8rem;
             overflow-x: auto;
-            margin: 10px 0;
-            border-left: 4px solid #3498db;
-            font-family: 'Consolas', 'Monaco', monospace;
         }
 
-        /* Portada Especial */
+        /* Portada */
         #p1 .front {
             background: linear-gradient(135deg, #2c3e50 0%, #000000 100%);
             color: white;
-            align-items: center;
-            justify-content: center;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #p1 .front::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
-            animation: pulse 15s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(30px, 30px); }
-        }
-
-        .cover-content {
-            position: relative;
-            z-index: 1;
+            justify-content: center;
         }
 
         .cover-photo {
-            width: 85%;
-            height: 200px;
-            object-fit: cover;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-        }
-
-        #p1 h1 {
-            font-size: 2.2rem;
-            margin: 0;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        #p1 .subtitle {
-            color: #3498db;
-            font-weight: bold;
-            margin-top: 5px;
-            font-size: 1.1rem;
-        }
-
-        #p1 .author {
-            margin-top: 20px;
-            font-style: italic;
-            opacity: 0.8;
-            font-size: 0.95rem;
-        }
-
-        /* Página final */
-        .end-page {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            height: 100%;
-        }
-
-        .end-page h1 {
-            color: #3498db;
-            font-size: 2rem;
+            width: 70%;
+            border-radius: 10px;
             margin-bottom: 15px;
         }
 
-        .end-page p {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
+        .page-num {
+            text-align: center;
+            padding: 5px;
+            font-size: 0.8rem;
+            color: #999;
         }
 
-        .restart-btn {
-            padding: 12px 28px;
-            cursor: pointer;
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
-        }
-
-        .restart-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
-        }
-
-        .restart-btn:active {
-            transform: translateY(0);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .book {
-                width: 90vw;
-                height: 70vh;
-                max-width: 380px;
-                max-height: 550px;
-            }
-
-            .instructions, .github-badge {
-                font-size: 0.8rem;
-                padding: 8px 16px;
-            }
+        /* Animación suave para el libro al abrirse */
+        .book-open {
+            transform: translateX(50%);
         }
     </style>
 </head>
 <body>
 
-    <div class="instructions">📖 Arrastra para aprender</div>
-
-    <div class="github-badge">
-        <a href="https://github.com/kevinreyes-garcia-rgb" target="_blank">
-            ⭐ GitHub
-        </a>
-    </div>
+    <div class="instructions">📖 Haz clic en las páginas para pasar</div>
 
     <div class="book" id="book">
         
-        <!-- Página 1: Portada -->
-        <div class="paper" id="p1" style="z-index: 5;">
+        <div class="paper" id="p1" style="z-index: 3;">
             <div class="front">
-                <div class="cover-content">
-                    <img src="https://avatars.githubusercontent.com/u/kevinreyes-garcia-rgb?s=400&v=4" alt="Portada" class="cover-photo" onerror="this.src='https://via.placeholder.com/300x200?text=Guía+Dev'">
+                <div class="content">
+                    <img src="https://avatars.githubusercontent.com/u/kevinreyes-garcia-rgb?s=400&v=4" alt="Portada" class="cover-photo">
                     <h1>Guía Dev</h1>
-                    <div class="subtitle">HTML • JS • C++</div>
-                    <div class="author">Por: Klee</div>
+                    <p>HTML • JS • C++</p>
+                    <p>Por: Klee</p>
                 </div>
             </div>
             <div class="back">
                 <div class="content">
                     <h2>Introducción</h2>
-                    <p>Bienvenido a esta guía interactiva. Aquí aprenderás los pilares del desarrollo moderno y la programación estructurada.</p>
-                    <p><strong>📚 Contenido:</strong></p>
+                    <p>Bienvenido a esta guía interactiva. Aprenderás los pilares del desarrollo moderno.</p>
                     <ul>
-                        <li>Estructura Web (HTML)</li>
-                        <li>Lógica de Scripting (JS)</li>
-                        <li>Programación de Sistema (C++)</li>
-                        <li>Conceptos avanzados</li>
+                        <li>HTML5: Estructura</li>
+                        <li>JavaScript: Lógica</li>
+                        <li>C++: Rendimiento</li>
                     </ul>
-                    <p><em>💡 Practica mientras aprendes</em></p>
                 </div>
                 <div class="page-num">1</div>
             </div>
         </div>
 
-        <!-- Página 2: HTML -->
-        <div class="paper" id="p2" style="z-index: 4;">
+        <div class="paper" id="p2" style="z-index: 2;">
             <div class="front">
                 <div class="content">
                     <h2>HTML5</h2>
-                    <h3>La Estructura Web</h3>
-                    <p>HTML es el esqueleto de cualquier sitio web. Define párrafos, títulos, enlaces e imágenes.</p>
-                    <pre>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;body&gt;
-  &lt;h1&gt;Hola Mundo&lt;/h1&gt;
-  &lt;p&gt;Bienvenido&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre>
+                    <p>El esqueleto de la web.</p>
+                    <pre>&lt;h1&gt;Hola&lt;/h1&gt;</pre>
                 </div>
                 <div class="page-num">2</div>
             </div>
             <div class="back">
                 <div class="content">
-                    <h3>Etiquetas Esenciales</h3>
-                    <p><code>&lt;div&gt;</code> - Contenedor<br>
-                    <code>&lt;a&gt;</code> - Enlaces<br>
-                    <code>&lt;img&gt;</code> - Imágenes<br>
-                    <code>&lt;button&gt;</code> - Botones</p>
-                    <h3>Atributos Clave</h3>
-                    <p><code>id</code> - Identificador único<br>
-                    <code>class</code> - Clases CSS<br>
-                    <code>href</code> - Enlaces<br>
-                    <code>src</code> - Fuentes</p>
-                    <p><em>✨ HTML no es un lenguaje de programación, es de marcado.</em></p>
+                    <h2>JavaScript</h2>
+                    <p>La mente detrás de la interactividad.</p>
+                    <pre>console.log("¡Hola!");</pre>
                 </div>
                 <div class="page-num">3</div>
             </div>
         </div>
 
-        <!-- Página 3: JavaScript -->
-        <div class="paper" id="p3" style="z-index: 3;">
+        <div class="paper" id="p3" style="z-index: 1;">
             <div class="front">
                 <div class="content">
-                    <h2>JavaScript</h2>
-                    <h3>Interactividad Web</h3>
-                    <p>El lenguaje que le da vida a la web. Permite cálculos, animaciones e interacciones.*
+                    <h2>C++</h2>
+                    <p>Potencia y control de bajo nivel.</p>
+                    <pre>cout << "Hello World";</pre>
+                </div>
+                <div class="page-num">4</div>
+            </div>
+            <div class="back">
+                <div class="content">
+                    <h2>¡Fin de la Guía!</h2>
+                    <p>Sigue practicando para ser un gran desarrollador.</p>
+                    <button onclick="restartBook()" style="padding: 10px; cursor:pointer;">Reiniciar</button>
+                </div>
+                <div class="page-num">5</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const papers = document.querySelectorAll(".paper");
+        const book = document.querySelector("#book");
+
+        // Añadir evento a cada página
+        papers.forEach((paper, index) => {
+            paper.addEventListener("click", () => {
+                if (paper.classList.contains("flipped")) {
+                    // Si ya está volteada, la regresamos
+                    paper.classList.remove("flipped");
+                    paper.style.zIndex = papers.length - index;
+                } else {
+                    // Si no está volteada, la giramos
+                    paper.classList.add("flipped");
+                    paper.style.zIndex = index + 1;
+                }
+                
+                // Mover el libro para que siempre se vea centrado
+                const flippedCount = document.querySelectorAll(".flipped").length;
+                if (flippedCount > 0) {
+                    book.classList.add("book-open");
+                } else {
+                    book.classList.remove("book-open");
+                }
+            });
+        });
+
+        function restartBook() {
+            papers.forEach((paper, index) => {
+                paper.classList.remove("flipped");
+                paper.style.zIndex = papers.length - index;
+            });
+            book.classList.remove("book-open");
+        }
+    </script>
+</body>
+</html>
